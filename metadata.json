@@ -1,0 +1,8 @@
+{
+  "name": "Krishani Fashion",
+  "description": "Krishani Fashion - Premium Sri Lankan Bed Sheets, Pillow Cases, Duvet Covers & Home Textiles (ඇඳ ඇතිරිලි සහ කොට්ට උර).",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

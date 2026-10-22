@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#fdf2f8" />
+  <circle cx="256" cy="256" r="220" fill="white" />
+  <path d="M200 170 V320 M312 170 V320 M200 245 H312" stroke="#be185d" stroke-width="48" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="256" y="410" font-family="serif" font-weight="900" font-size="44" fill="#D81B60" text-anchor="middle" letter-spacing="2">KRISHANI</text>
+  <path d="M 340 140 Q 360 140 360 120 Q 360 140 380 140 Q 360 140 360 160 Q 360 140 340 140 Z" fill="#ec4899" />
+  <path d="M 130 250 Q 145 250 145 235 Q 145 250 160 250 Q 145 250 145 265 Q 145 250 130 250 Z" fill="#f472b6" />
+</svg>

@@ -1,0 +1,64 @@
+{
+  "schema": {
+    "products": {
+      "type": "collection",
+      "description": "Products available in the store",
+      "fields": {
+        "name": { "type": "string" },
+        "price": { "type": "number" },
+        "stock": { "type": "number" },
+        "sizes": { "type": "array" },
+        "image": { "type": "string" }
+      }
+    },
+    "orders": {
+      "type": "collection",
+      "description": "Orders placed by customers",
+      "fields": {
+        "customerId": { "type": "string" },
+        "items": { "type": "array" },
+        "total": { "type": "number" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "timestamp" },
+        "updatedAt": { "type": "timestamp" }
+      }
+    },
+    "customers": {
+      "type": "collection",
+      "description": "Customer details",
+      "fields": {
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "address": { "type": "string" }
+      }
+    },
+    "notifications": {
+      "type": "collection",
+      "description": "System notifications for admin",
+      "fields": {
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "read": { "type": "boolean" },
+        "createdAt": { "type": "timestamp" }
+      }
+    }
+  },
+  "securityRules": {
+    "products": {
+      "read": "true",
+      "write": "true"
+    },
+    "orders": {
+      "read": "true",
+      "write": "true"
+    },
+    "customers": {
+      "read": "true",
+      "write": "true"
+    },
+    "notifications": {
+      "read": "true",
+      "write": "true"
+    }
+  }
+}
