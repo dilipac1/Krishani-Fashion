@@ -6,6 +6,12 @@ import { Product } from '../types';
 import { formatCategoryName } from '../lib/translations';
 import { WaterRippleButton } from '../components/WaterRippleButton';
 
+const WhatsAppIcon = ({ size = 20, className = "" }: { size?: number, className?: string }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
+    <path d="M12.012 2C6.48 2 2 6.48 2 12.012c0 1.73.443 3.403 1.284 4.874L2 22l5.252-1.378c1.41.764 2.997 1.169 4.76 1.169 5.532 0 10.012-4.48 10.012-10.012 0-2.67-1.04-5.18-2.93-7.07-1.89-1.89-4.4-2.93-7.07-2.93zm0 1.5c2.27 0 4.4 0.884 6.007 2.493 1.607 1.608 2.493 3.738 2.493 6.019 0 4.703-3.829 8.532-8.5 8.532-1.63 0-3.175-0.457-4.507-1.317l-0.324-0.192-3.111 0.816 0.83-3.031-0.211-0.334A8.47 8.47 0 013.5 12.012c0-4.703 3.828-8.512 8.512-8.512zm-3.568 3.52c-0.195 0-0.374 0.038-0.536 0.114-0.162 0.076-0.312 0.19-0.449 0.342-0.274 0.304-0.441 0.695-0.501 1.173-0.06 0.478 0.06 1.01 0.36 1.596 0.3 0.586 0.771 1.144 1.413 1.674 1.284 1.06 2.748 1.83 4.391 2.31 0.413 0.12 0.784 0.18 1.113 0.18 0.413 0 0.754-0.093 1.023-0.278 0.269-0.185 0.485-0.458 0.648-0.818 0.163-0.36 0.244-0.785 0.244-1.274 0-0.095-0.007-0.186-0.021-0.274-0.014-0.088-0.035-0.174-0.063-0.258a0.84 0.84 0 00-0.311-0.441c-0.138-0.106-0.326-0.186-0.564-0.24l-1.357-0.322c-0.238-0.054-0.445-0.03-0.62 0.072-0.175 0.102-0.323 0.27-0.443 0.505l-0.413 0.816c-0.084 0.166-0.218 0.264-0.402 0.294a0.7 0.7 0 01-0.428-0.114c-0.163-0.106-0.373-0.263-0.63-0.472-0.257-0.209-0.548-0.468-0.874-0.777-0.326-0.309-0.655-0.655-0.987-1.038-0.332-0.383-0.613-0.75-0.843-1.101a0.76 0.76 0 01-0.114-0.462 0.66 0.66 0 010.228-0.417l0.672-0.756c0.156-0.174 0.244-0.355 0.264-0.543a0.65 0.65 0 00-0.132-0.495L9.626 7.31c-0.126-0.174-0.276-0.31-0.449-0.408a0.85 0.85 0 00-0.354-0.122c-0.125-0.014-0.252-0.02-0.379-0.02z" />
+  </svg>
+);
+
 export const ShopView = ({ navigateTo, onAdminTrigger, activeTab }: { navigateTo: (tab: string) => void, onAdminTrigger?: () => void, activeTab?: string }) => {
   const { products, cart, addToCart, lang, setLang, t, availableCategories } = useStore();
   const [searchTerm, setSearchTerm] = useState('');
@@ -88,7 +94,7 @@ export const ShopView = ({ navigateTo, onAdminTrigger, activeTab }: { navigateTo
             src="/assets/krishani_fashion_logo.png" 
             alt="Krishani Fashion Logo" 
             onClick={handleSecretTap}
-            className="w-14 h-14 rounded-full object-cover shadow-md shadow-pink-200/80 ring-2 ring-pink-200 cursor-pointer select-none shrink-0 hover:scale-105 transition-all bg-white"
+            className="w-14 h-14 rounded-full object-contain shadow-md shadow-pink-200/80 ring-2 ring-pink-200 cursor-pointer select-none shrink-0 transition-all bg-white"
           />
           <div>
             <h1 className="text-base font-serif font-bold text-[#292929] leading-tight flex items-center gap-1">
@@ -120,10 +126,10 @@ export const ShopView = ({ navigateTo, onAdminTrigger, activeTab }: { navigateTo
 
           <button 
             onClick={() => openWhatsApp()} 
-            className="w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center hover:bg-emerald-500 hover:text-white transition-all shadow-sm"
+            className="w-8 h-8 rounded-full bg-emerald-50 text-[#25D366] flex items-center justify-center hover:bg-[#25D366] hover:text-white transition-all shadow-sm"
             title="WhatsApp"
           >
-            <MessageCircle size={17} />
+            <WhatsAppIcon size={17} />
           </button>
           
           <button onClick={() => navigateTo('cart')} className="relative w-8 h-8 rounded-full bg-rose-50 text-[#D81B60] flex items-center justify-center hover:bg-[#D81B60] hover:text-white transition-all shadow-sm">
@@ -140,23 +146,20 @@ export const ShopView = ({ navigateTo, onAdminTrigger, activeTab }: { navigateTo
       <div className="flex-1 overflow-y-auto hide-scrollbar pb-28">
         {/* Luxury Landscape Brand Hero Banner */}
         <section className="px-5 pt-4 pb-4">
-          <div className="relative rounded-[2.5rem] bg-gradient-to-r from-[#5a0026] via-[#a30040] via-[#d81b60] to-[#e91e63] text-white shadow-2xl shadow-rose-950/25 border border-rose-400/40 p-2 sm:p-3">
+          <div className="relative rounded-[2.5rem] bg-gradient-to-r from-[#5a0026] via-[#a30040] via-[#d81b60] to-[#e91e63] text-white shadow-2xl shadow-rose-950/25 border border-rose-400/40 p-2 sm:p-3 overflow-hidden">
             {/* Silk Mesh & Gold Shimmer Background Layers */}
-            <div className="absolute inset-0 rounded-[2.5rem] pointer-events-none overflow-hidden">
-              {/* Radial Golden Highlight */}
-              <div className="absolute -top-24 -right-24 w-96 h-96 bg-amber-400/20 rounded-full blur-3xl mix-blend-screen" />
-              <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-pink-400/20 rounded-full blur-3xl" />
+            <div className="absolute inset-0 pointer-events-none">
+              {/* Soft Glowing Perfect Circles - Replacing cut-off blobs */}
+              <div className="absolute -top-12 -right-12 w-64 h-64 bg-white/10 rounded-full blur-2xl" />
+              <div className="absolute top-1/4 -right-8 w-32 h-32 bg-amber-400/15 rounded-full blur-xl" />
+              <div className="absolute -bottom-16 -left-16 w-80 h-80 bg-pink-400/20 rounded-full blur-3xl" />
+              <div className="absolute bottom-1/4 -left-10 w-40 h-40 bg-white/5 rounded-full blur-2xl" />
               
-              {/* Organic Floral Silk Vectors matching logo art */}
-              <svg className="absolute -top-10 -right-10 w-80 h-80 opacity-20 text-rose-100" fill="currentColor" viewBox="0 0 200 200">
-                <path d="M44.7,-61.2C56.2,-52.3,62.8,-36.8,66.1,-21C69.4,-5.2,69.4,10.9,63.1,24.8C56.8,38.7,44.2,50.3,29.9,57.7C15.6,65.1,-0.4,68.2,-16.7,65.6C-33,63,-49.6,54.7,-60.1,41.4C-70.6,28.1,-75,9.8,-72.7,-7.1C-70.4,-24,-61.4,-39.5,-48.9,-48.8C-36.4,-58.1,-20.4,-61.1,-3.5,-56.3C13.4,-51.5,33.2,-70.1,44.7,-61.2Z" transform="translate(100 100)" />
-              </svg>
-              <svg className="absolute -bottom-16 -left-12 w-96 h-96 opacity-15 text-pink-200" fill="currentColor" viewBox="0 0 200 200">
-                <path d="M41.5,-58.1C52.4,-50.2,59.3,-36.4,63.1,-21.8C66.9,-7.2,67.6,8.2,62.4,22.1C57.2,36,46.1,48.4,32.7,56.5C19.3,64.6,3.6,68.4,-12.3,66.5C-28.2,64.6,-44.3,57,-55.1,44.5C-65.9,32,-71.4,14.6,-70.2,-2.1C-69,-18.8,-61.1,-34.8,-49.4,-43.3C-37.7,-51.8,-22.2,-52.8,-6.9,-43.3C8.4,-33.8,30.6,-66,41.5,-58.1Z" transform="translate(100 100)" />
-              </svg>
+              {/* Subtle Linear Light Strokes */}
+              <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-from)_0%,_transparent_70%)] from-white" />
             </div>
 
-            <div className="relative z-10 px-6 sm:px-8 py-8 sm:py-10 rounded-[2.2rem] bg-gradient-to-r from-black/30 via-transparent to-black/15 backdrop-blur-[1px] flex flex-col-reverse sm:flex-row items-center justify-between gap-6">
+            <div className="relative z-10 px-6 sm:px-8 py-8 sm:py-10 rounded-[2.2rem] bg-gradient-to-r from-black/20 via-transparent to-black/10 backdrop-blur-[1px] flex flex-col-reverse sm:flex-row items-center justify-between gap-6">
               <div className="max-w-md text-center sm:text-left">
                 <span className="inline-flex items-center gap-1.5 text-[10px] font-black tracking-[0.25em] text-amber-200 uppercase mb-2.5 bg-white/15 backdrop-blur-md px-3.5 py-1 rounded-full border border-white/20 shadow-sm">
                   <Sparkles size={12} className="text-amber-300 animate-pulse" /> {t('heroTag')}
@@ -183,14 +186,16 @@ export const ShopView = ({ navigateTo, onAdminTrigger, activeTab }: { navigateTo
               <div className="flex flex-col items-center justify-center shrink-0 my-1 sm:my-0 sm:pr-2 md:pr-4 lg:pr-6">
                 <div className="relative flex items-center justify-center p-2">
                   {/* Clean Background Glow Ring */}
-                  <div className="absolute -inset-1 bg-gradient-to-tr from-amber-300 via-rose-300 to-pink-200 rounded-full blur-md opacity-60 pointer-events-none" />
+                  <div className="absolute -inset-2 bg-gradient-to-tr from-amber-300 via-rose-300 to-pink-200 rounded-full blur-xl opacity-50 pointer-events-none" />
                   
-                  {/* Ultra-Crisp Unclipped Sharp Logo Image */}
-                  <img 
-                    src="/assets/krishani_fashion_logo.png" 
-                    alt="Krishani Fashion Logo Emblem" 
-                    className="relative z-10 w-36 h-36 sm:w-48 sm:h-48 lg:w-56 lg:h-56 rounded-full object-contain bg-white p-2 shadow-2xl ring-4 ring-amber-300/90 border-4 border-white transition-transform duration-300 hover:scale-105 select-none shrink-0"
-                  />
+                  {/* Ultra-Crisp Unclipped Sharp Logo Image - Perfect Circle */}
+                  <div className="relative z-10 w-36 h-36 sm:w-48 sm:h-48 lg:w-56 lg:h-56 rounded-full overflow-hidden bg-white p-2 shadow-2xl ring-4 ring-amber-300/90 border-4 border-white transition-transform duration-300 hover:scale-105 select-none shrink-0 flex items-center justify-center">
+                    <img 
+                      src="/assets/krishani_fashion_logo.png" 
+                      alt="Krishani Fashion Logo Emblem" 
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -228,7 +233,7 @@ export const ShopView = ({ navigateTo, onAdminTrigger, activeTab }: { navigateTo
             </span>
           </div>
 
-          <div className="overflow-x-auto hide-scrollbar flex items-center gap-3 py-4 px-2 -my-2">
+          <div className="overflow-x-auto hide-scrollbar flex items-center gap-3 py-6 px-4 -my-3">
             {categories.map(cat => {
               const isSelected = activeCategory === cat;
               const formattedTitle = formatCategoryName(cat, lang);
@@ -345,29 +350,46 @@ export const ShopView = ({ navigateTo, onAdminTrigger, activeTab }: { navigateTo
         {/* Store Location & Direct Contact Footer Banner */}
         <section className="px-5 mt-8 mb-4">
           <div className="bg-gradient-to-br from-rose-50 via-pink-50 to-pink-100/70 rounded-3xl p-6 border border-rose-200/80 text-center flex flex-col items-center shadow-sm">
-            <img 
-              src="/assets/krishani_fashion_logo.png" 
-              alt="Krishani Fashion Logo" 
-              className="w-24 h-24 rounded-2xl object-contain shadow-md bg-white p-1.5 border border-rose-200 mb-3"
-            />
+            <div className="relative w-24 h-24 mb-3">
+              <div className="absolute inset-0 bg-white rounded-2xl shadow-md p-1.5 border border-rose-200 overflow-hidden flex items-center justify-center">
+                <img 
+                  src="/assets/krishani_fashion_logo.png" 
+                  alt="Krishani Fashion Logo" 
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            </div>
             <h4 className="font-serif font-bold text-[#292929] text-lg">{t('storeTitle')}</h4>
             <p className="text-xs text-[#D81B60] font-bold mt-0.5">{t('storeSubtitle')}</p>
-            <p className="text-xs font-semibold text-gray-700 mt-1">
-              📍 {lang === 'si' ? 'දිඹුල්ගමුව, රඹුක්කන, ශ්‍රී ලංකාව' : 'Dimbulgamuwa, Rambukkana, Sri Lanka'}
-            </p>
-            <div className="flex gap-3 mt-4">
-              <button 
-                onClick={() => openWhatsApp()} 
-                className="bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-md shadow-emerald-200 hover:bg-emerald-700 transition-all"
-              >
-                <MessageCircle size={15} /> {t('whatsAppOrder')}
-              </button>
-              <a 
-                href="tel:0760005364" 
-                className="bg-white text-gray-800 border border-gray-200 px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 hover:bg-gray-50 transition-all"
-              >
-                <Phone size={15} className="text-[#D81B60]" /> {t('directCall')} (+94 76 000 5364)
-              </a>
+            <div className="flex flex-col gap-4 mt-6 w-full max-w-xs">
+              <div className="flex gap-3">
+                <WaterRippleButton 
+                  onClick={() => openWhatsApp()} 
+                  className="flex-1 bg-[#25D366] text-white px-4 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-md shadow-emerald-200 hover:bg-[#128C7E] transition-all"
+                >
+                  <WhatsAppIcon size={16} /> {t('whatsAppOrder')}
+                </WaterRippleButton>
+                <a 
+                  href="tel:0760005364" 
+                  className="flex-1 bg-white text-gray-800 border border-gray-200 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 hover:bg-gray-50 transition-all shadow-sm"
+                >
+                  <Phone size={15} className="text-[#D81B60]" /> {t('directCall')}
+                </a>
+              </div>
+              
+              <div className="pt-4 border-t border-rose-200/50">
+                <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-3">{lang === 'si' ? 'අපේ App එක ලබාගන්න' : 'Download Our Official App'}</p>
+                <div className="flex justify-center gap-3">
+                  <WaterRippleButton className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-xl text-[10px] font-bold hover:bg-gray-800 transition-all shadow-sm">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.5 12c0-2.5 1.5-4.5 3.5-5.5-1-1.5-2.5-2.5-4.5-2.5-2 0-3 1-4.5 1-1 0-2.5-1-4-1-3 0-6 2.5-6 7 0 2.5 1 5 2.5 7.5s2.5 4.5 4.5 4.5c1 0 1.5-0.5 3-0.5s2 0.5 3 0.5c1.5 0 3-2 4-4.5-0.5-0.5-1.5-1-1.5-3zM14.5 1.5c1-1.5 0.5-3.5 0.5-3.5-2 0-3.5 1.5-3.5 3.5 0 0.5 0 1 0.5 1.5 0.5 0 1.5 0.5 2.5-1.5z"/></svg>
+                    <span>iOS App</span>
+                  </WaterRippleButton>
+                  <WaterRippleButton className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-xl text-[10px] font-bold hover:bg-gray-800 transition-all shadow-sm">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.523 15.341l3.038-1.754a.83.83 0 000-1.437l-3.038-1.754-.954 1.652.954 1.653-.001.04zm-1.897 1.096l-1.39-2.407-1.39 2.407a.83.83 0 00.718 1.243h1.344a.83.83 0 00.718-1.243zm-4.226-2.407l-3.038 1.754-.001.04a.83.83 0 00.718 1.243h1.344a.83.83 0 00.718-1.243l-1.39-2.407-.001.041zm-1.648-1.653l3.038-1.754-.954-1.653-.954 1.653h-.001.04zm1.897-1.096l1.39 2.407 1.39-2.407a.83.83 0 00-.718-1.243h-1.344a.83.83 0 00-.718 1.243zM3.439 2.656l14.887 8.595a.831.831 0 010 1.437L3.439 21.284a.831.831 0 01-1.243-.718V3.374a.831.831 0 011.243-.718z"/></svg>
+                    <span>Android App</span>
+                  </WaterRippleButton>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -455,9 +477,9 @@ export const ShopView = ({ navigateTo, onAdminTrigger, activeTab }: { navigateTo
 
                   <WaterRippleButton
                     onClick={() => openWhatsApp(selectedProduct.name)}
-                    className="w-full bg-emerald-600 text-white py-3.5 rounded-2xl text-xs font-black uppercase tracking-wider shadow-md shadow-emerald-200 hover:bg-emerald-700 transition-all flex items-center justify-center gap-2"
+                    className="w-full bg-[#25D366] text-white py-3.5 rounded-2xl text-xs font-black uppercase tracking-wider shadow-md shadow-emerald-200 hover:bg-[#128C7E] transition-all flex items-center justify-center gap-2"
                   >
-                    <MessageCircle size={16} /> {t('whatsAppOrder')}
+                    <WhatsAppIcon size={16} /> {t('whatsAppOrder')}
                   </WaterRippleButton>
                 </div>
               </div>

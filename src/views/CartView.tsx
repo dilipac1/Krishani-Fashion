@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useStore } from '../store';
 import { ChevronLeft, Trash2, CheckCircle2, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { WaterRippleButton } from '../components/WaterRippleButton';
 
 export const CartView = ({ navigateTo }: { navigateTo: (tab: string) => void }) => {
   const { cart, products, removeFromCart, addOrder, addCustomer, clearCart, t } = useStore();
@@ -60,12 +61,12 @@ export const CartView = ({ navigateTo }: { navigateTo: (tab: string) => void }) 
         </motion.div>
         <h2 className="text-3xl font-serif font-bold text-[#292929] mb-4">{t('orderConfirmed')}</h2>
         <p className="text-[#777777] mb-12 max-w-xs leading-relaxed font-medium">{t('orderThankYou')}</p>
-        <button 
+        <WaterRippleButton 
           onClick={() => navigateTo('shop')}
           className="px-10 py-4 bg-[#D81B60] text-white rounded-full font-black uppercase tracking-[0.2em] text-[10px] shadow-2xl shadow-rose-200 transition-transform hover:scale-105 active:scale-95"
         >
           {t('backToStore')}
-        </button>
+        </WaterRippleButton>
       </div>
     );
   }
@@ -170,12 +171,12 @@ export const CartView = ({ navigateTo }: { navigateTo: (tab: string) => void }) 
               <span className="text-[10px] font-black text-[#777777] uppercase tracking-widest">{t('totalPay')}</span>
               <span className="text-2xl font-black text-[#D81B60]">Rs. {cartTotal.toLocaleString()}</span>
             </div>
-            <button 
+            <WaterRippleButton 
               onClick={handlePlaceOrder}
               className="px-10 py-4 bg-[#D81B60] text-white rounded-full font-black uppercase tracking-[0.2em] text-[10px] shadow-2xl shadow-rose-200 transition-transform hover:scale-105 active:scale-95"
             >
               {t('placeOrder')}
-            </button>
+            </WaterRippleButton>
           </div>
         </div>
       )}

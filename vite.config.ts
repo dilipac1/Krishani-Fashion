@@ -20,30 +20,25 @@ export default defineConfig(() => {
           display: 'standalone',
           icons: [
             {
-              src: '/icon.svg',
-              sizes: 'any',
-              type: 'image/svg+xml'
-            },
-            {
-              src: '/icon.svg',
+              src: '/assets/krishani_fashion_logo.png',
               sizes: '192x192',
-              type: 'image/svg+xml'
+              type: 'image/png'
             },
             {
-              src: '/icon.svg',
+              src: '/assets/krishani_fashion_logo.png',
               sizes: '512x512',
-              type: 'image/svg+xml'
+              type: 'image/png'
             },
             {
-              src: '/icon.svg',
+              src: '/assets/krishani_fashion_logo.png',
               sizes: '192x192',
-              type: 'image/svg+xml',
+              type: 'image/png',
               purpose: 'maskable'
             },
             {
-              src: '/icon.svg',
+              src: '/assets/krishani_fashion_logo.png',
               sizes: '512x512',
-              type: 'image/svg+xml',
+              type: 'image/png',
               purpose: 'maskable'
             }
           ]
@@ -82,9 +77,9 @@ export default defineConfig(() => {
     server: {
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
       // Do not modifyâfile watching is disabled to prevent flickering during agent edits.
-      hmr: process.env.DISABLE_HMR !== 'true' ? { overlay: false } : false,
+      hmr: false,
       // Disable file watching when DISABLE_HMR is true to save CPU during agent edits.
-      watch: process.env.DISABLE_HMR === 'true' ? null : {},
+      watch: null,
     },
   };
 });

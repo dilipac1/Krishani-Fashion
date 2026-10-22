@@ -7,13 +7,14 @@ interface Ripple {
   y: number;
   color: string;
   secondaryColor: string;
+  tertiaryColor: string;
 }
 
 const RIPPLE_COLORS = [
-  { primary: 'rgba(216, 27, 96, 0.65)', secondary: 'rgba(255, 183, 77, 0.5)' },   // Hot Pink + Gold
-  { primary: 'rgba(255, 64, 129, 0.7)', secondary: 'rgba(255, 128, 171, 0.5)' },  // Rose Pink + Soft Pink
-  { primary: 'rgba(233, 30, 99, 0.65)', secondary: 'rgba(255, 215, 0, 0.6)' },    // Magenta + Bright Gold
-  { primary: 'rgba(194, 24, 91, 0.7)', secondary: 'rgba(240, 98, 146, 0.5)' },   // Deep Rose + Light Pink
+  { primary: 'rgba(216, 27, 96, 0.45)', secondary: 'rgba(255, 183, 77, 0.3)', tertiary: 'rgba(255, 64, 129, 0.2)' },   // Hot Pink + Gold
+  { primary: 'rgba(255, 64, 129, 0.5)', secondary: 'rgba(255, 128, 171, 0.3)', tertiary: 'rgba(233, 30, 99, 0.2)' },  // Rose Pink + Soft Pink
+  { primary: 'rgba(233, 30, 99, 0.45)', secondary: 'rgba(255, 215, 0, 0.4)', tertiary: 'rgba(255, 183, 77, 0.2)' },    // Magenta + Bright Gold
+  { primary: 'rgba(194, 24, 91, 0.5)', secondary: 'rgba(240, 98, 146, 0.3)', tertiary: 'rgba(216, 27, 96, 0.2)' },   // Deep Rose + Light Pink
 ];
 
 interface WaterRippleButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -41,7 +42,8 @@ export const WaterRippleButton: React.FC<WaterRippleButtonProps> = ({
       x,
       y,
       color: colorPair.primary,
-      secondaryColor: colorPair.secondary
+      secondaryColor: colorPair.secondary,
+      tertiaryColor: colorPair.tertiary
     };
 
     setRipples(prev => [...prev.slice(-3), newRipple]);
@@ -66,41 +68,57 @@ export const WaterRippleButton: React.FC<WaterRippleButtonProps> = ({
         <AnimatePresence>
           {ripples.map(r => (
             <React.Fragment key={r.id}>
-              {/* Primary Ink Drop Spread */}
+              {/* Primary Ink Drop Spread - Larger, softer blur */}
               <motion.span
-                initial={{ scale: 0, opacity: 0.9, width: 24, height: 24 }}
+                initial={{ scale: 0, opacity: 0.8, width: 30, height: 30 }}
                 animate={{ 
-                  scale: 14, 
+                  scale: 16, 
                   opacity: 0,
-                  filter: "blur(3px)" 
+                  filter: "blur(8px)" 
                 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 1.4, ease: [0.1, 0.5, 0.2, 1] }}
                 onAnimationComplete={() => removeRipple(r.id)}
                 style={{
                   position: 'absolute',
-                  top: r.y - 12,
-                  left: r.x - 12,
+                  top: r.y - 15,
+                  left: r.x - 15,
                   borderRadius: '50%',
-                  background: `radial-gradient(circle, ${r.color} 0%, ${r.secondaryColor} 70%, transparent 100%)`,
-                  boxShadow: `0 0 25px ${r.color}`,
+                  background: `radial-gradient(circle, ${r.color} 0%, ${r.secondaryColor} 40%, ${r.tertiaryColor} 70%, transparent 100%)`,
                 }}
               />
-              {/* Secondary Water Color Wave */}
+              {/* Secondary Water Color Wave - Slower, more organic */}
               <motion.span
-                initial={{ scale: 0, opacity: 0.7, width: 16, height: 16 }}
+                initial={{ scale: 0, opacity: 0.6, width: 20, height: 20 }}
                 animate={{ 
-                  scale: 10, 
+                  scale: 12, 
+                  opacity: 0,
+                  filter: "blur(12px)" 
+                }}
+                transition={{ duration: 1.8, delay: 0.1, ease: "easeOut" }}
+                style={{
+                  position: 'absolute',
+                  top: r.y - 10,
+                  left: r.x - 10,
+                  borderRadius: '50%',
+                  background: `radial-gradient(circle, ${r.secondaryColor} 0%, transparent 80%)`,
+                }}
+              />
+              {/* Small accent drop */}
+              <motion.span
+                initial={{ scale: 0, opacity: 0.9, width: 10, height: 10 }}
+                animate={{ 
+                  scale: 8, 
                   opacity: 0,
                   filter: "blur(4px)" 
                 }}
-                transition={{ duration: 0.7, delay: 0.05, ease: [0.25, 0.8, 0.25, 1] }}
+                transition={{ duration: 0.8, ease: "circOut" }}
                 style={{
                   position: 'absolute',
-                  top: r.y - 8,
-                  left: r.x - 8,
+                  top: r.y - 5,
+                  left: r.x - 5,
                   borderRadius: '50%',
-                  background: `radial-gradient(circle, ${r.secondaryColor} 0%, transparent 100%)`,
+                  background: r.color,
                 }}
               />
             </React.Fragment>

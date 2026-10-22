@@ -41,7 +41,7 @@ const StoreContext = createContext<StoreContextType | undefined>(undefined);
 
 export const StoreProvider = ({ children }: { children: ReactNode }) => {
   const [lang, setLangState] = useState<Language>(() => {
-    return (localStorage.getItem('krishani_store_lang') as Language) || 'si';
+    return (localStorage.getItem('krishani_store_lang') as Language) || 'en';
   });
 
   const setLang = (newLang: Language) => {

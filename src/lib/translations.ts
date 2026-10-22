@@ -67,7 +67,15 @@ export const translations = {
     orderConfirmed: "Order එක සාර්ථකයි!",
     orderThankYou: "ක්‍රිෂාණි ෆැෂන් වෙතින් ඇණවුම් කළාට ස්තූතියි! අපි ඉක්මනින්ම ඔබව සම්බන්ධ කරගන්නෙමු.",
     backToStore: "නැවත Store එකට යන්න",
-    totalPay: "එකතුව"
+    totalPay: "එකතුව",
+    installApp: "App එක දාගන්න",
+    getTheApp: "ක්‍රිෂාණි ෆැෂන් App එක ගන්න",
+    appDesc: "Android සහ iOS ඕනෑම දුරකථනයකට දැන්ම දාගන්න.",
+    howToInstall: "App එක දාගන්නා ආකාරය",
+    step1: "Safari Browser එකෙන් මෙය විවෘත කරන්න.",
+    step2: "Share button (බොත්තම) එක ඔබන්න.",
+    step3: "පහළට ගොස් 'Add to Home Screen' තෝරන්න.",
+    gotIt: "තේරුණා"
   },
   en: {
     // Header & Navigation
@@ -135,7 +143,15 @@ export const translations = {
     orderConfirmed: "Order Confirmed!",
     orderThankYou: "Thank you for ordering from Krishani Fashion. We will contact you shortly to confirm delivery.",
     backToStore: "Back to Store",
-    totalPay: "Total Pay"
+    totalPay: "Total Pay",
+    installApp: "Install App",
+    getTheApp: "Get the Krishani Fashion App",
+    appDesc: "Download our app on Android & iOS for a faster shopping experience.",
+    howToInstall: "How to Install Our App",
+    step1: "Open this website in Safari Browser.",
+    step2: "Tap the Share button in the bottom bar.",
+    step3: "Scroll down and select 'Add to Home Screen'.",
+    gotIt: "Got it"
   }
 };
 
