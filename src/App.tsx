@@ -14,6 +14,7 @@ import { ReportsView } from './views/ReportsView';
 import { ShopView } from './views/ShopView';
 import { CartView } from './views/CartView';
 import { WishlistView } from './views/WishlistView';
+import { ContactView } from './views/ContactView';
 import { Settings, LogOut, Lock, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { WaterRippleButton } from './components/WaterRippleButton';
@@ -48,6 +49,7 @@ function AppContent() {
         case 'categories': return <ShopView navigateTo={setActiveTab} onAdminTrigger={() => setShowLogin(true)} activeTab={activeTab} />;
         case 'wishlist': return <WishlistView navigateTo={setActiveTab} />;
         case 'cart': return <CartView navigateTo={setActiveTab} />;
+        case 'contact': return <ContactView />;
         default: return <ShopView navigateTo={setActiveTab} />;
       }
     } else {

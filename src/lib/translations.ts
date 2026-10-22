@@ -75,7 +75,8 @@ export const translations = {
     step1: "Safari Browser එකෙන් මෙය විවෘත කරන්න.",
     step2: "Share button (බොත්තම) එක ඔබන්න.",
     step3: "පහළට ගොස් 'Add to Home Screen' තෝරන්න.",
-    gotIt: "තේරුණා"
+    gotIt: "තේරුණා",
+    contactUs: "අප අමතන්න"
   },
   en: {
     // Header & Navigation
@@ -151,7 +152,8 @@ export const translations = {
     step1: "Open this website in Safari Browser.",
     step2: "Tap the Share button in the bottom bar.",
     step3: "Scroll down and select 'Add to Home Screen'.",
-    gotIt: "Got it"
+    gotIt: "Got it",
+    contactUs: "Contact Us"
   }
 };
 

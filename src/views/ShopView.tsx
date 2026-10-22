@@ -1,16 +1,82 @@
 import React, { useState, useRef, useMemo } from 'react';
 import { useStore } from '../store';
 import { motion, AnimatePresence } from 'motion/react';
-import { ShoppingBag, Search, X, Heart, MessageCircle, Phone, ArrowRight, ShieldCheck, Truck, Sparkles, CheckCircle2, Layers, Box, Tag } from 'lucide-react';
+import { ShoppingBag, Search, X, Heart, MessageCircle, Phone, ArrowRight, ShieldCheck, Truck, Sparkles, CheckCircle2, Layers, Box, Tag, Smartphone } from 'lucide-react';
 import { Product } from '../types';
 import { formatCategoryName } from '../lib/translations';
 import { WaterRippleButton } from '../components/WaterRippleButton';
 
+import { usePWAInstall } from '../hooks/usePWAInstall';
+
 const WhatsAppIcon = ({ size = 20, className = "" }: { size?: number, className?: string }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
-    <path d="M12.012 2C6.48 2 2 6.48 2 12.012c0 1.73.443 3.403 1.284 4.874L2 22l5.252-1.378c1.41.764 2.997 1.169 4.76 1.169 5.532 0 10.012-4.48 10.012-10.012 0-2.67-1.04-5.18-2.93-7.07-1.89-1.89-4.4-2.93-7.07-2.93zm0 1.5c2.27 0 4.4 0.884 6.007 2.493 1.607 1.608 2.493 3.738 2.493 6.019 0 4.703-3.829 8.532-8.5 8.532-1.63 0-3.175-0.457-4.507-1.317l-0.324-0.192-3.111 0.816 0.83-3.031-0.211-0.334A8.47 8.47 0 013.5 12.012c0-4.703 3.828-8.512 8.512-8.512zm-3.568 3.52c-0.195 0-0.374 0.038-0.536 0.114-0.162 0.076-0.312 0.19-0.449 0.342-0.274 0.304-0.441 0.695-0.501 1.173-0.06 0.478 0.06 1.01 0.36 1.596 0.3 0.586 0.771 1.144 1.413 1.674 1.284 1.06 2.748 1.83 4.391 2.31 0.413 0.12 0.784 0.18 1.113 0.18 0.413 0 0.754-0.093 1.023-0.278 0.269-0.185 0.485-0.458 0.648-0.818 0.163-0.36 0.244-0.785 0.244-1.274 0-0.095-0.007-0.186-0.021-0.274-0.014-0.088-0.035-0.174-0.063-0.258a0.84 0.84 0 00-0.311-0.441c-0.138-0.106-0.326-0.186-0.564-0.24l-1.357-0.322c-0.238-0.054-0.445-0.03-0.62 0.072-0.175 0.102-0.323 0.27-0.443 0.505l-0.413 0.816c-0.084 0.166-0.218 0.264-0.402 0.294a0.7 0.7 0 01-0.428-0.114c-0.163-0.106-0.373-0.263-0.63-0.472-0.257-0.209-0.548-0.468-0.874-0.777-0.326-0.309-0.655-0.655-0.987-1.038-0.332-0.383-0.613-0.75-0.843-1.101a0.76 0.76 0 01-0.114-0.462 0.66 0.66 0 010.228-0.417l0.672-0.756c0.156-0.174 0.244-0.355 0.264-0.543a0.65 0.65 0 00-0.132-0.495L9.626 7.31c-0.126-0.174-0.276-0.31-0.449-0.408a0.85 0.85 0 00-0.354-0.122c-0.125-0.014-0.252-0.02-0.379-0.02z" />
+    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.04 14.69 2 12.04 2ZM12.04 20.15C10.56 20.15 9.11 19.75 7.84 19L7.54 18.82L4.42 19.64L5.25 16.6L5.05 16.29C4.3 15.03 3.9 13.59 3.9 12.11C3.9 7.57 7.6 3.87 12.14 3.87C14.34 3.87 16.41 4.73 17.96 6.29C19.51 7.85 20.37 9.92 20.37 12.12C20.37 16.66 16.67 20.36 12.13 20.36L12.04 20.15ZM16.56 13.99C16.31 13.87 15.09 13.27 14.87 13.18C14.64 13.1 14.48 13.06 14.31 13.3C14.14 13.55 13.67 14.11 13.53 14.27C13.39 14.44 13.24 14.46 12.99 14.33C12.74 14.21 11.94 13.94 11 13.1C10.26 12.44 9.77 11.63 9.62 11.38C9.48 11.13 9.6 11 9.73 10.87C9.84 10.76 9.98 10.58 10.1 10.44C10.22 10.3 10.27 10.19 10.35 10.03C10.43 9.86 10.39 9.72 10.33 9.6C10.27 9.48 9.77 8.26 9.57 7.76C9.37 7.28 9.16 7.34 9.01 7.33H8.53C8.36 7.33 8.1 7.39 7.87 7.64C7.65 7.89 7.02 8.47 7.02 9.66C7.02 10.85 7.89 12 8.01 12.16C8.13 12.33 9.72 14.77 12.15 15.82C12.73 16.07 13.18 16.22 13.53 16.33C14.11 16.51 14.64 16.49 15.06 16.43C15.53 16.36 16.53 15.83 16.73 15.26C16.93 14.69 16.93 14.2 16.87 14.09C16.81 13.99 16.65 13.93 16.4 13.81L16.56 13.99Z" />
   </svg>
 );
+
+const AppleIcon = ({ size = 16, className = "" }: { size?: number, className?: string }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.05 20.28c-.96 0-2.04-.54-3.03-.54-.99 0-2.18.54-3.01.54-1.95 0-5.01-4.04-5.01-8.54 0-4.6 2.41-6.95 4.8-6.95 1.05 0 2.03.45 2.83.45.8 0 1.9-.45 3.03-.45 2.45 0 4.35 1.83 4.35 4.54a11.1 11.1 0 01-2.05 6.38c-1.16 1.63-1.89 4.57-2.91 4.57zm-3.03-16.71c0-2.22 1.81-3.57 1.81-3.57s.11.15.11.36c0 2.08-1.92 3.55-1.92 3.55s-.08-.12-.08-.34h.08z" />
+  </svg>
+);
+
+const PlayStoreIcon = ({ size = 16, className = "" }: { size?: number, className?: string }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.523 15.3l-3.108-3.3 3.108-3.3 3.446 1.957c.98.556.98 1.463 0 2.02l-3.446 1.957zM12.03 12L3.06 21c-.419-.44-.653-1.132-.653-2.02V5.02c0-.888.234-1.58.653-2.02L12.03 12zM13.273 13.323L16.29 16.53l-10.435 5.922c-.645.366-1.218.326-1.61-.044L13.273 13.323zM13.273 10.677L4.245 1.592c.392-.37 1.107-.41 1.61-.044l10.435 5.922l-3.017 3.207z"/>
+  </svg>
+);
+
+const IOSGuideModal = ({ show, onClose, t }: { show: boolean, onClose: () => void, t: any }) => (
+  <AnimatePresence>
+    {show && (
+      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <motion.div
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          onClick={onClose}
+          className="absolute inset-0 bg-black/60 backdrop-blur-md"
+        />
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.9, opacity: 0, y: 20 }}
+          className="relative w-full max-w-sm bg-white rounded-[2.5rem] p-8 shadow-2xl overflow-hidden"
+        >
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-300 via-rose-500 to-pink-500" />
+          <div className="flex justify-between items-start mb-6">
+            <div className="w-12 h-12 bg-rose-50 rounded-2xl flex items-center justify-center text-[#D81B60]">
+              <Smartphone size={24} />
+            </div>
+            <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+              <X size={20} className="text-gray-400" />
+            </button>
+          </div>
+          <h3 className="text-lg font-serif font-black text-[#292929] mb-4">{t('howToInstall')}</h3>
+          <div className="space-y-6">
+            <div className="flex gap-4">
+              <div className="w-8 h-8 shrink-0 rounded-full bg-amber-100 flex items-center justify-center text-amber-700 font-black text-xs">1</div>
+              <p className="text-sm font-bold text-gray-800 leading-snug">{t('step1')}</p>
+            </div>
+            <div className="flex gap-4">
+              <div className="w-8 h-8 shrink-0 rounded-full bg-rose-100 flex items-center justify-center text-rose-700 font-black text-xs">2</div>
+              <div>
+                <p className="text-sm font-bold text-gray-800 leading-snug">{t('step2')}</p>
+                <div className="mt-2 w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center text-blue-500">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13"/></svg>
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <div className="w-8 h-8 shrink-0 rounded-full bg-pink-100 flex items-center justify-center text-pink-700 font-black text-xs">3</div>
+              <p className="text-sm font-bold text-gray-800 leading-snug">{t('step3')}</p>
+            </div>
+          </div>
+          <WaterRippleButton onClick={onClose} className="w-full mt-8 bg-gray-900 text-white py-3.5 rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-black transition-all">
+            {t('gotIt')}
+          </WaterRippleButton>
+        </motion.div>
+      </div>
+    )}
+  </AnimatePresence>
+);
+
 
 export const ShopView = ({ navigateTo, onAdminTrigger, activeTab }: { navigateTo: (tab: string) => void, onAdminTrigger?: () => void, activeTab?: string }) => {
   const { products, cart, addToCart, lang, setLang, t, availableCategories } = useStore();
@@ -19,6 +85,8 @@ export const ShopView = ({ navigateTo, onAdminTrigger, activeTab }: { navigateTo
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [selectedSize, setSelectedSize] = useState<string>('');
   const [liked, setLiked] = useState<Record<string, boolean>>({});
+  const [showIOSGuide, setShowIOSGuide] = useState(false);
+  const { isInstallable, isIOS, install } = usePWAInstall();
   const categoryRef = useRef<HTMLElement>(null);
 
   React.useEffect(() => {
@@ -233,37 +301,59 @@ export const ShopView = ({ navigateTo, onAdminTrigger, activeTab }: { navigateTo
             </span>
           </div>
 
-          <div className="overflow-x-auto hide-scrollbar flex items-center gap-3 py-6 px-4 -my-3">
+          <div className="overflow-x-auto hide-scrollbar flex items-center gap-4 py-6 px-4 -my-3">
             {categories.map(cat => {
               const isSelected = activeCategory === cat;
               const formattedTitle = formatCategoryName(cat, lang);
 
               let IconComponent = Tag;
-              if (cat === 'All' || cat === 'සියල්ල') IconComponent = Sparkles;
-              else if (cat.includes('Bed Sheets') || cat.includes('ඇඳ ඇතිරිලි')) IconComponent = Layers;
-              else if (cat.includes('Pillow') || cat.includes('කොට්ට')) IconComponent = Box;
-              else if (cat.includes('Duvet') || cat.includes('දුපොට්')) IconComponent = Heart;
-              else if (cat.includes('Mattress') || cat.includes('මැට්ට්‍රස්')) IconComponent = ShieldCheck;
+              let bgColor = 'bg-rose-50';
+              let iconColor = 'text-rose-600';
+              let activeGradient = 'from-rose-500 to-pink-600';
+
+              if (cat === 'All' || cat === 'සියල්ල') {
+                IconComponent = Sparkles;
+                bgColor = 'bg-amber-50';
+                iconColor = 'text-amber-600';
+                activeGradient = 'from-amber-400 to-amber-600';
+              } else if (cat.includes('Bed Sheets') || cat.includes('ඇඳ ඇතිරිලි')) {
+                IconComponent = Layers;
+                bgColor = 'bg-blue-50';
+                iconColor = 'text-blue-600';
+                activeGradient = 'from-blue-500 to-indigo-600';
+              } else if (cat.includes('Pillow') || cat.includes('කොට්ට')) {
+                IconComponent = Box;
+                bgColor = 'bg-emerald-50';
+                iconColor = 'text-emerald-600';
+                activeGradient = 'from-emerald-500 to-teal-600';
+              } else if (cat.includes('Duvet') || cat.includes('දුපොට්')) {
+                IconComponent = Heart;
+                bgColor = 'bg-pink-50';
+                iconColor = 'text-pink-600';
+                activeGradient = 'from-pink-500 to-rose-600';
+              } else if (cat.includes('Mattress') || cat.includes('මැට්ට්‍රස්')) {
+                IconComponent = ShieldCheck;
+                bgColor = 'bg-purple-50';
+                iconColor = 'text-purple-600';
+                activeGradient = 'from-purple-500 to-fuchsia-600';
+              }
 
               return (
-                <WaterRippleButton
-                  key={cat}
-                  onClick={() => setActiveCategory(cat)}
-                  className={`px-4.5 py-2.5 rounded-2xl text-xs font-bold whitespace-nowrap transition-all duration-300 flex items-center gap-2 select-none shrink-0 ${
-                    isSelected
-                      ? 'bg-gradient-to-r from-[#c2185b] to-[#D81B60] text-white shadow-lg shadow-rose-200/80 scale-105 ring-2 ring-rose-200'
-                      : 'bg-white text-gray-700 border border-rose-100/80 hover:border-rose-300 hover:bg-rose-50/40 shadow-sm'
-                  }`}
-                >
-                  <IconComponent size={15} className={isSelected ? 'text-amber-300' : 'text-[#D81B60] opacity-80'} />
-                  <span>{formattedTitle}</span>
-                  {isSelected && (
-                    <motion.span 
-                      layoutId="activeCategoryDot" 
-                      className="w-1.5 h-1.5 rounded-full bg-white ml-0.5" 
-                    />
-                  )}
-                </WaterRippleButton>
+                <div key={cat} className="flex flex-col items-center gap-2 shrink-0">
+                  <WaterRippleButton
+                    onClick={() => setActiveCategory(cat)}
+                    className={`w-14 h-14 rounded-2xl transition-all duration-300 flex items-center justify-center select-none shadow-sm ${
+                      isSelected
+                        ? `bg-gradient-to-br ${activeGradient} text-white shadow-lg shadow-pink-200/80 scale-110 ring-2 ring-white`
+                        : `${bgColor} ${iconColor} border border-white hover:scale-105`
+                    }`}
+                  >
+                    <IconComponent size={24} className={isSelected ? 'text-white' : ''} />
+                  </WaterRippleButton>
+                  <span className={`text-[10px] font-black uppercase tracking-tight transition-colors duration-300 ${isSelected ? 'text-[#D81B60]' : 'text-gray-500'}`}>
+                    {formattedTitle}
+                  </span>
+                </div>
               );
             })}
           </div>
@@ -347,53 +437,11 @@ export const ShopView = ({ navigateTo, onAdminTrigger, activeTab }: { navigateTo
           </div>
         )}
 
-        {/* Store Location & Direct Contact Footer Banner */}
-        <section className="px-5 mt-8 mb-4">
-          <div className="bg-gradient-to-br from-rose-50 via-pink-50 to-pink-100/70 rounded-3xl p-6 border border-rose-200/80 text-center flex flex-col items-center shadow-sm">
-            <div className="relative w-24 h-24 mb-3">
-              <div className="absolute inset-0 bg-white rounded-2xl shadow-md p-1.5 border border-rose-200 overflow-hidden flex items-center justify-center">
-                <img 
-                  src="/assets/krishani_fashion_logo.png" 
-                  alt="Krishani Fashion Logo" 
-                  className="w-full h-full object-contain"
-                />
-              </div>
-            </div>
-            <h4 className="font-serif font-bold text-[#292929] text-lg">{t('storeTitle')}</h4>
-            <p className="text-xs text-[#D81B60] font-bold mt-0.5">{t('storeSubtitle')}</p>
-            <div className="flex flex-col gap-4 mt-6 w-full max-w-xs">
-              <div className="flex gap-3">
-                <WaterRippleButton 
-                  onClick={() => openWhatsApp()} 
-                  className="flex-1 bg-[#25D366] text-white px-4 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-md shadow-emerald-200 hover:bg-[#128C7E] transition-all"
-                >
-                  <WhatsAppIcon size={16} /> {t('whatsAppOrder')}
-                </WaterRippleButton>
-                <a 
-                  href="tel:0760005364" 
-                  className="flex-1 bg-white text-gray-800 border border-gray-200 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 hover:bg-gray-50 transition-all shadow-sm"
-                >
-                  <Phone size={15} className="text-[#D81B60]" /> {t('directCall')}
-                </a>
-              </div>
-              
-              <div className="pt-4 border-t border-rose-200/50">
-                <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-3">{lang === 'si' ? 'අපේ App එක ලබාගන්න' : 'Download Our Official App'}</p>
-                <div className="flex justify-center gap-3">
-                  <WaterRippleButton className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-xl text-[10px] font-bold hover:bg-gray-800 transition-all shadow-sm">
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.5 12c0-2.5 1.5-4.5 3.5-5.5-1-1.5-2.5-2.5-4.5-2.5-2 0-3 1-4.5 1-1 0-2.5-1-4-1-3 0-6 2.5-6 7 0 2.5 1 5 2.5 7.5s2.5 4.5 4.5 4.5c1 0 1.5-0.5 3-0.5s2 0.5 3 0.5c1.5 0 3-2 4-4.5-0.5-0.5-1.5-1-1.5-3zM14.5 1.5c1-1.5 0.5-3.5 0.5-3.5-2 0-3.5 1.5-3.5 3.5 0 0.5 0 1 0.5 1.5 0.5 0 1.5 0.5 2.5-1.5z"/></svg>
-                    <span>iOS App</span>
-                  </WaterRippleButton>
-                  <WaterRippleButton className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-xl text-[10px] font-bold hover:bg-gray-800 transition-all shadow-sm">
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.523 15.341l3.038-1.754a.83.83 0 000-1.437l-3.038-1.754-.954 1.652.954 1.653-.001.04zm-1.897 1.096l-1.39-2.407-1.39 2.407a.83.83 0 00.718 1.243h1.344a.83.83 0 00.718-1.243zm-4.226-2.407l-3.038 1.754-.001.04a.83.83 0 00.718 1.243h1.344a.83.83 0 00.718-1.243l-1.39-2.407-.001.041zm-1.648-1.653l3.038-1.754-.954-1.653-.954 1.653h-.001.04zm1.897-1.096l1.39 2.407 1.39-2.407a.83.83 0 00-.718-1.243h-1.344a.83.83 0 00-.718 1.243zM3.439 2.656l14.887 8.595a.831.831 0 010 1.437L3.439 21.284a.831.831 0 01-1.243-.718V3.374a.831.831 0 011.243-.718z"/></svg>
-                    <span>Android App</span>
-                  </WaterRippleButton>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* End of content spacing */}
+        <div className="h-12" />
       </div>
+
+      <IOSGuideModal show={showIOSGuide} onClose={() => setShowIOSGuide(false)} t={t} />
 
       {/* Product Details Modal */}
       <AnimatePresence>

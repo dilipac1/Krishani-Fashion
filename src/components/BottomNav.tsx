@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Package, TrendingUp, ShoppingBag, LayoutGrid, Heart, LayoutDashboard, ShoppingCart } from 'lucide-react';
+import { Home, Package, TrendingUp, ShoppingBag, LayoutGrid, Heart, LayoutDashboard, ShoppingCart, MessageCircle } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useStore } from '../store';
 
@@ -10,7 +10,7 @@ interface BottomNavProps {
 }
 
 export const BottomNav: React.FC<BottomNavProps> = ({ currentTab, onChangeTab, mode }) => {
-  const { cart, t } = useStore();
+  const { cart, t, lang } = useStore();
   const cartItemsCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   const shopTabs = [
@@ -18,6 +18,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({ currentTab, onChangeTab, m
     { id: 'categories', label: t('categories'), icon: LayoutGrid, count: 0 },
     { id: 'wishlist', label: t('wishlist'), icon: Heart, count: 0 },
     { id: 'cart', label: t('cart'), icon: ShoppingCart, count: cartItemsCount },
+    { id: 'contact', label: t('contactUs'), icon: MessageCircle, count: 0 },
   ];
 
   const adminTabs = [
