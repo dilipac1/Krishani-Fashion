@@ -7,7 +7,7 @@ import { usePWAInstall } from '../hooks/usePWAInstall';
 
 const WhatsAppIcon = ({ size = 20, className = "" }: { size?: number, className?: string }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
-    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.04 14.69 2 12.04 2ZM12.04 20.15C10.56 20.15 9.11 19.75 7.84 19L7.54 18.82L4.42 19.64L5.25 16.6L5.05 16.29C4.3 15.03 3.9 13.59 3.9 12.11C3.9 7.57 7.6 3.87 12.14 3.87C14.34 3.87 16.41 4.73 17.96 6.29C19.51 7.85 20.37 9.92 20.37 12.12C20.37 16.66 16.67 20.36 12.13 20.36L12.04 20.15ZM16.56 13.99C16.31 13.87 15.09 13.27 14.87 13.18C14.64 13.1 14.48 13.06 14.31 13.3C14.14 13.55 13.67 14.11 13.53 14.27C13.39 14.44 13.24 14.46 12.99 14.33C12.74 14.21 11.94 13.94 11 13.1C10.26 12.44 9.77 11.63 9.62 11.38C9.48 11.13 9.6 11 9.73 10.87C9.84 10.76 9.98 10.58 10.1 10.44C10.22 10.3 10.27 10.19 10.35 10.03C10.43 9.86 10.39 9.72 10.33 9.6C10.27 9.48 9.77 8.26 9.57 7.76C9.37 7.28 9.16 7.34 9.01 7.33H8.53C8.36 7.33 8.1 7.39 7.87 7.64C7.65 7.89 7.02 8.47 7.02 9.66C7.02 10.85 7.89 12 8.01 12.16C8.13 12.33 9.72 14.77 12.15 15.82C12.73 16.07 13.18 16.22 13.53 16.33C14.11 16.51 14.64 16.49 15.06 16.43C15.53 16.36 16.53 15.83 16.73 15.26C16.93 14.69 16.93 14.2 16.87 14.09C16.81 13.99 16.65 13.93 16.4 13.81L16.56 13.99Z" />
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 .004 5.412.001 12.046c0 2.121.54 4.192 1.566 6.04L0 24l6.117-1.604a11.803 11.803 0 005.925 1.585h.005c6.637 0 12.048-5.414 12.051-12.049a11.824 11.824 0 00-3.517-8.417z" />
   </svg>
 );
 
@@ -77,11 +77,29 @@ const IOSGuideModal = ({ show, onClose, t }: { show: boolean, onClose: () => voi
 export const ContactView: React.FC = () => {
   const { lang, t } = useStore();
   const [showIOSGuide, setShowIOSGuide] = useState(false);
-  const { isInstallable, isIOS, install } = usePWAInstall();
+  const { isInstallable, isInstalled, isIOS, install } = usePWAInstall();
 
   const openWhatsApp = () => {
     const text = `Hello Krishani Fashion! I have an inquiry about bed sheets and pillow cases.`;
     window.open(`https://wa.me/94760005364?text=${encodeURIComponent(text)}`, '_blank');
+  };
+
+  const handleAndroidInstall = async () => {
+    if (isInstalled) {
+      alert(lang === 'si' ? 'App එක දැනටමත් install කර ඇත.' : 'App is already installed.');
+      return;
+    }
+    if (isInstallable) {
+      const success = await install();
+      if (!success) {
+        // User cancelled or error
+      }
+    } else {
+      // Fallback for browsers that don't support beforeinstallprompt or it hasn't fired yet
+      alert(lang === 'si' 
+        ? 'ඔබේ Browser එකෙන් සෘජු ස්ථාපනයට සහය නොදක්වයි. කරුණාකර Chrome හෝ Edge භාවිතා කරන්න, නැතහොයි Browser එකේ "Add to Home Screen" විකල්පය භාවිතා කරන්න.' 
+        : 'Direct installation is not supported by this browser. Please use Chrome or Edge, or use the "Add to Home Screen" option in your browser menu.');
+    }
   };
 
   return (
@@ -185,8 +203,8 @@ export const ContactView: React.FC = () => {
             <div className="flex flex-col gap-3">
               <WaterRippleButton 
                 onClick={() => {
-                  if (isIOS) setShowIOSGuide(true);
-                  else install();
+                  if (isInstalled) alert(lang === 'si' ? 'App එක දැනටමත් install කර ඇත.' : 'App is already installed.');
+                  else setShowIOSGuide(true);
                 }}
                 className="w-full bg-white text-black py-3.5 rounded-2xl text-xs font-black uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-gray-100 transition-all"
               >
@@ -194,11 +212,7 @@ export const ContactView: React.FC = () => {
                 <span>iOS App</span>
               </WaterRippleButton>
               <WaterRippleButton 
-                onClick={() => {
-                  if (isIOS) setShowIOSGuide(true);
-                  else if (isInstallable) install();
-                  else alert(lang === 'si' ? 'මෙම Browser එකෙන් App එක install කළ නොහැක. කරුණාකර Chrome හෝ Edge භාවිතා කරන්න.' : 'This browser does not support installation. Please use Chrome or Edge.');
-                }}
+                onClick={handleAndroidInstall}
                 className="w-full bg-white/10 backdrop-blur-md text-white border border-white/20 py-3.5 rounded-2xl text-xs font-black uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-white/20 transition-all"
               >
                 <PlayStoreIcon size={18} />

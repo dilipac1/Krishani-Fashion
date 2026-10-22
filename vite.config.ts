@@ -13,27 +13,27 @@ export default defineConfig(() => {
         registerType: 'autoUpdate',
         devOptions: { enabled: true },
         manifest: {
+          id: '/',
           name: 'KRISHANI FASHION',
           short_name: 'KRISHANI',
+          description: 'High Quality Bed Sheets & Pillow Cases from Krishani Fashion',
           theme_color: '#fdf2f8',
           background_color: '#ffffff',
           display: 'standalone',
+          start_url: '/',
+          scope: '/',
           icons: [
             {
               src: '/assets/krishani_fashion_logo.png',
               sizes: '192x192',
-              type: 'image/png'
+              type: 'image/png',
+              purpose: 'any'
             },
             {
               src: '/assets/krishani_fashion_logo.png',
               sizes: '512x512',
-              type: 'image/png'
-            },
-            {
-              src: '/assets/krishani_fashion_logo.png',
-              sizes: '192x192',
               type: 'image/png',
-              purpose: 'maskable'
+              purpose: 'any'
             },
             {
               src: '/assets/krishani_fashion_logo.png',
